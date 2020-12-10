@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="project_base"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\;CMake Files\configuration\;CMake Files\libs\;CMake Files\libs\glad\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="project_base">
+				<Option output="/home/vukan/Desktop/Racunarska grafika/Projekat/project_base" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/configuration"/>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/include"/>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 project_base"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="project_base/fast">
+				<Option output="/home/vukan/Desktop/Racunarska grafika/Projekat/project_base" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/configuration"/>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/include"/>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 project_base/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="STB_IMAGE">
+				<Option output="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/libSTB_IMAGE.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/configuration"/>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 STB_IMAGE"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="STB_IMAGE/fast">
+				<Option output="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/libSTB_IMAGE.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/configuration"/>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 STB_IMAGE/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad">
+				<Option output="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/libs/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/libs/glad"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 glad"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad/fast">
+				<Option output="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/libs/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/libs/glad"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/include"/>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/vukan/Desktop/Racunarska\ grafika/Projekat/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/include/glad/glad.h">
+			<Option target="glad"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/src/glad.c">
+			<Option target="glad"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/libs/stb_image.cpp">
+			<Option target="STB_IMAGE"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/src/main.cpp">
+			<Option target="project_base"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/../../../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/../../../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/../../../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets-none.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/../../../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/../../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimp-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/../../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimp-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/../../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimpTargets-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/../../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-5.0/assimpTargets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-5.0\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/configuration/root_directory.h.in">
+			<Option virtualFolder="CMake Files\configuration\"/>
+		</Unit>
+		<Unit filename="/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\libs\glad\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
