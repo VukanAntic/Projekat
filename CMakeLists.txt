@@ -23,12 +23,12 @@ find_package(glfw3 REQUIRED)
 find_package(ASSIMP REQUIRED)
 
 add_subdirectory(libs/glad)
-add_subdirectory(libs/imgui)
+#add_subdirectory(libs/imgui)
 
 add_definitions(${OPENGL_DEFINITIONS})
 
 add_library(STB_IMAGE libs/stb_image.cpp)
-set(LIBS glfw glad OpenGL::GL X11 Xrandr Xinerama Xi Xxf86vm Xcursor dl pthread freetype ${ASSIMP_LIBRARY} STB_IMAGE imgui)
+set(LIBS glfw glad OpenGL::GL X11 Xrandr Xinerama Xi Xxf86vm Xcursor dl pthread freetype ${ASSIMP_LIBRARY} STB_IMAGE )
 
 
 configure_file(configuration/root_directory.h.in configuration/root_directory.h)

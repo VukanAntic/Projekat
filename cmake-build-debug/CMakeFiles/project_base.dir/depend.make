@@ -4,11 +4,10 @@
 CMakeFiles/project_base.dir/src/main.cpp.o: ../include/common.h
 CMakeFiles/project_base.dir/src/main.cpp.o: ../include/learnopengl/camera.h
 CMakeFiles/project_base.dir/src/main.cpp.o: ../include/learnopengl/filesystem.h
-CMakeFiles/project_base.dir/src/main.cpp.o: ../include/learnopengl/mesh.h
-CMakeFiles/project_base.dir/src/main.cpp.o: ../include/learnopengl/model.h
 CMakeFiles/project_base.dir/src/main.cpp.o: ../include/learnopengl/shader.h
-CMakeFiles/project_base.dir/src/main.cpp.o: ../include/learnopengl/shader_m.h
 CMakeFiles/project_base.dir/src/main.cpp.o: ../include/rg/Error.h
+CMakeFiles/project_base.dir/src/main.cpp.o: ../include/rg/MyTexture.h
+CMakeFiles/project_base.dir/src/main.cpp.o: ../include/rg/Shader.h
 CMakeFiles/project_base.dir/src/main.cpp.o: ../include/stb_image.h
 CMakeFiles/project_base.dir/src/main.cpp.o: ../libs/glad/include/KHR/khrplatform.h
 CMakeFiles/project_base.dir/src/main.cpp.o: ../libs/glad/include/glad/glad.h
