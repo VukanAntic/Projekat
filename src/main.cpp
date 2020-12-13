@@ -1,17 +1,22 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 #include <iostream>
 #include <cmath>
 #include <vector>
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include <rg/MyTexture.h>
-#include <learnopengl/camera.h>
-#include <learnopengl/shader.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <learnopengl/camera.h>
+#include <learnopengl/model.h>
+#include <learnopengl/mesh.h>
+#include <learnopengl/shader.h>
+
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -20,7 +25,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 1200;
+const unsigned int SCR_HEIGHT = 700;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -71,6 +76,8 @@ int main()
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+
+    stbi_set_flip_vertically_on_load(true);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -154,6 +161,7 @@ int main()
     // shaderi za kocku svetla kao i za kocke koje se rotiraju -> OVO SE MENJA PRI IZBACIVANJU KOCKI
     Shader cubeShader("resources/shaders/vertexCube.vs", "resources/shaders/fragmentCube.fs");
     Shader lightShader("resources/shaders/vertexLight.vs", "resources/shaders/fragmentLight.fs");
+    Shader flashlightShader("resources/shaders/vertexFlashlight.vs", "resources/shaders/fragmentFlashlight.fs");
 
     // pravimo teksture
     std::string path1 = "resources/textures/container2.png";
@@ -162,8 +170,8 @@ int main()
     MyTexture ourTexture2(path2);
 
     cubeShader.use();
-    cubeShader.setInt("material.difuse", 0);
-    cubeShader.setInt("material.specular", 1);
+    cubeShader.setFloat("material.difuse", 0);
+    cubeShader.setFloat("material.specular", 1);
 
     std::vector<std::vector<float>> translationsPerSquare = {
             {-1.0f, 0.0f, -1.0f},
@@ -171,10 +179,28 @@ int main()
             {-0.0f, 0.0f, -2.0f},
     };
 
+    // dodavanje flashlight-a "resources/objects/flashlight/Flashlight_Idle.obj.glb"
+    Model flashlight(FileSystem::getPath("resources/objects/Flashlight/flashlight.obj"));
+
     // render loop
     // -----------
+    float oldYaw = -90.0f;
+    float newYaw =  oldYaw;
+
+    float oldPitch = 0.0f;
+    float newPitch = oldPitch;
+
     while (!glfwWindowShouldClose(window))
     {
+
+        oldYaw = newYaw;
+        newYaw = ourCamera.Yaw;
+        float diffrenceYaw = newYaw - oldYaw;
+
+        oldPitch = newPitch;
+        newPitch = ourCamera.Pitch;
+        float diffrencePitch = newPitch - oldPitch;
+
         // racunanje vremena izmedju 2 frame-a
         float currentFrame = (float)glfwGetTime();
         deltaTime = currentFrame - lastFrame;
@@ -193,8 +219,8 @@ int main()
         cubeShader.use();
         cubeShader.setVec3("light.position", ourCamera.Position);
         cubeShader.setVec3("light.direction", ourCamera.Front);
-        cubeShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
-        cubeShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+        cubeShader.setFloat("light.cutOff", glm::cos(glm::radians(17.5f)));
+        cubeShader.setFloat("light.outerCutOff", glm::cos(glm::radians(20.5f)));
         cubeShader.setVec3("viewPos", ourCamera.Position);
 
         // light properties
@@ -210,10 +236,13 @@ int main()
         // material properties
         cubeShader.setFloat("material.shininess", 32.0f);
 
-
-        glm::mat4 projection = glm::perspective(glm::radians(ourCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        float zNear = 0.1f;
+        float zFar = 100.0f;
+        // racunanje projection matrice
+        glm::mat4 projection = glm::perspective(glm::radians(ourCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, zNear, zFar);
         cubeShader.setMat4("projection", projection);
 
+        // racunanje view matrice
         glm::mat4 view = ourCamera.GetViewMatrix();
         cubeShader.setMat4("view", view);
 
@@ -225,17 +254,45 @@ int main()
             i++;
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, glm::vec3(row[0], row[1], row[2]));
-            model = glm::rotate(model, glm::radians((float)(i * 20 * glfwGetTime())), glm::vec3(1.0f, 1.0f, 0.0f));
+            model = glm::rotate(model, glm::radians((float)(i * 20 * glfwGetTime())), glm::vec3(1.0f, 0.0f, 0.0f));
             model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-
+//
             // Racunanje normalMatrix na CPU, ne GPU, ali ima problema -> Pitaj marka
             //glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(model)));
             //cubeShader.setUniform3fMatrix("normalMatrix", normalMatrix);
-
+//
             cubeShader.setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
+
+        //FIRE HAZARD
+
+        view = glm::mat4(1.0f);
+        flashlightShader.setMat4("view", view);
+        flashlightShader.setMat4("projection", projection);
+
+        glm::vec3 lightPosition = glm::vec3(+3.8f, 0.0f, -1.0f);
+        glm::mat4 model = glm::mat4(1.0f);
+        float flashlightDistance = zNear;
+        // ourCamera.Position + flashlightDistance * ourCamera.Front
+        glm::vec3 flashlightVector = ( ourCamera.Position + (flashlightDistance * ourCamera.Front));
+        flashlightVector += glm::vec3(3.0f, 0.0f, 0.0f);
+        // glm:`:vec3(-1.0f, 0.0f, -1.0f)
+        //qstd::cout << flashlightVector[0] << " " << flashlightVector[1] << " " << flashlightVector[2] << "\n";
+        model = glm::translate(model, lightPosition);
+        model = glm::rotate(model, glm::radians(+180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        //model = glm::rotate(model, glm::radians((float)(2 * M_PI / ourCamera.MouseSensitivity)), ourCamera.Front);
+        // razlika ugla novogfront i starog front
+
+        //model = glm::rotate(model, diffrencePitch, glm::vec3(1.0f, 0.0f, 0.0f));
+        //model = glm::rotate(model, diffrenceYaw, glm::vec3(0.0f, 1.0f, 0.0f));
+
+        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+        flashlightShader.setMat4("model", model);
+
+
+        flashlight.Draw(flashlightShader);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
