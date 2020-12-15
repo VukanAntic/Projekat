@@ -143,23 +143,22 @@ int main()
         else if (ourCamera.Position.z < -33.4069)
             ourCamera.Position.z = -33.4069;
          //(RUPA DESNA I LEVA STRANA) - moraju da se stave malo manje granice od onih za blizi i dalji zid jer ce inace lepiti za levi i desni zid
-        else if((ourCamera.Position.x < 5.48954 || ourCamera.Position.x > -7.69192) && ourCamera.Position.z > -27.0 && ourCamera.Position.z < -14.6){
-            if(ourCamera.Position.x > 5.48954 || ourCamera.Position.x < -7.69192) {}
+        else if((ourCamera.Position.x < 5.9 || ourCamera.Position.x > -8.0) && ourCamera.Position.z > -26.6 && ourCamera.Position.z < -14.2){
+            if(ourCamera.Position.x > 5.9 || ourCamera.Position.x < -8.0) {}
             else {
                 if (abs(6.44959 - ourCamera.Position.x) < abs(-8.34407 - ourCamera.Position.x))
-                    ourCamera.Position.x = 5.48954;
+                    ourCamera.Position.x = 5.9;
                 else
-                    ourCamera.Position.x = -7.69192;
+                    ourCamera.Position.x = -8.0;
             }
         }
-        //RUPA BLIZI I DALJI ZID 
-        else if((ourCamera.Position.z < -14.0583 || ourCamera.Position.z > -27.5423 ) && ourCamera.Position.x > -7.69192 && ourCamera.Position.x < 5.48954){
-            if(ourCamera.Position.z > -14.0583 || ourCamera.Position.z < -27.5423) {}
+        else if((ourCamera.Position.z < -13.5 || ourCamera.Position.z > -27.3 ) && ourCamera.Position.x > -8.0 && ourCamera.Position.x < 5.9){
+            if(ourCamera.Position.z > -13.5 || ourCamera.Position.z < -27.3) {}
             else {
                 if (abs( -7.70539 - ourCamera.Position.z) < abs(-33.8069 - ourCamera.Position.z))
-                    ourCamera.Position.z = -14.0583;
+                    ourCamera.Position.z = -13.5;
                 else
-                    ourCamera.Position.z = -27.5423;
+                    ourCamera.Position.z = -27.3;
             }
 
         }
