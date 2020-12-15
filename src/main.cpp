@@ -25,7 +25,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 700;
+const unsigned int SCR_HEIGHT = 1200;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -77,86 +77,9 @@ int main()
         return -1;
     }
 
-    stbi_set_flip_vertically_on_load(true);
+    //stbi_set_flip_vertically_on_load(true);
 
     glEnable(GL_DEPTH_TEST);
-
-    // kocke -> bice kasnije izbacene za sam muzej
-    //float vertices[] = {
-    //        // positions          // normals           // texture coords
-    //        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
-    //        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
-    //        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
-    //        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
-    //        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
-    //        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
-//
-    //        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-    //        0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
-    //        0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
-    //        0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
-    //        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
-    //        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-//
-    //        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-    //        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
-    //        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-    //        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-    //        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-    //        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-//
-    //        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-    //        0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
-    //        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-    //        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-    //        0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-    //        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-//
-    //        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
-    //        0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
-    //        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-    //        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-    //        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
-    //        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
-//
-    //        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
-    //        0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
-    //        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
-    //        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
-    //        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
-    //        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
-    //};
-
-    unsigned int VBO, cubeVAO;
-    glGenVertexArrays(1, &cubeVAO);
-    glGenBuffers(1, &VBO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindVertexArray(cubeVAO);
-
-    //kordinate
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    //normale
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    //kordinate tekstura
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
-
-    // VAO od svetla (ne crtamo ga, al nek bude)
-    unsigned int lightCubeVAO;
-    glGenVertexArrays(1, &lightCubeVAO);
-    glBindVertexArray(lightCubeVAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    // note that we update the lamp's position attribute's stride to reflect the updated buffer data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
 
     // shaderi za kocku svetla kao i za kocke koje se rotiraju -> OVO SE MENJA PRI IZBACIVANJU KOCKI
     Shader cubeShader("resources/shaders/vertexCube.vs", "resources/shaders/fragmentCube.fs");
@@ -174,18 +97,23 @@ int main()
     cubeShader.setFloat("material.difuse", 0);
     cubeShader.setFloat("material.specular", 1);
 
-    //std::vector<std::vector<float>> translationsPerSquare = {
-    //        {-1.0f, 0.0f, -1.0f},
-    //        {0.5f, 0.0f, 1.0f},
-    //        {-0.0f, 0.0f, -2.0f},
-    //};
 
     // dodavanje flashlight-a "resources/objects/flashlight/Flashlight_Idle.obj.glb"
     Model flashlight(FileSystem::getPath("resources/objects/Flashlight/Flashlight_Idle.obj"));
     Model mainRoom(FileSystem::getPath("resources/objects/Lavirint/Lavirint4_1.obj"));
 
     // dodajemo zbog efekta slabljenja baterijske lampe
-    glm::vec3 diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec3 ambientLighting = glm::vec3(0.5f, 0.5f, 0.5f);
+    glm::vec3 diffuseLighting = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec3 specularLighting = glm::vec3(1.0f, 1.0f, 1.0f);
+    glm::vec3 diffuseDiff = glm::vec3(0.01f, 0.01f, 0.01f);
+    glm::vec3 specularDiff = glm::vec3(0.2f, 0.2f, 0.2f);
+    glm::vec3 ambientDiff = glm::vec3(0.1f, 0.1f, 0.1f);
+    bool batteryNotDead = true;
+    int batteryLife = 100;
+    float shininess = 32.0f;
+    // da ne bi pokupili npr 2.1, 2.2, 2.3 kao 2, nego cim smo jednom 2 pokupili, nemoj vise uzimas time = 2
+    float lastValueTaken = 0;
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -232,21 +160,31 @@ int main()
         //        ourCamera.Position.x = 5.38767;
         //}
 
-
         // racunanje vremena izmedju 2 frame-a
         float currentFrame = (float)glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        //std::cout << lastFrame << "\n";
         int time = (int)lastFrame;
 
         // SLABLJENJE BATERISJKE LAMPE
-        //if (time % 3 == 0){
-        //    diffuse = std::max(diffuse - glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 0.0f, 0.0f));
-        //    time = 0;
-        //}
+        if (time % 3 == 0 && batteryNotDead && time != lastValueTaken){
+            if (batteryLife % 20 == 0){
+                //ambientLighting -= ambientDiff;
+                //specularDiff -= specularDiff;
+                shininess  /= 2;
+            }
+            diffuseLighting -= diffuseDiff;
+            batteryLife--;
+            lastValueTaken = time;
+            if (batteryLife == 0) {
+                batteryNotDead = false;
+                //shininess = 0;
+            }
+            //std::cout << batteryLife << "\n";
+            //std::cout << diffuseLighting[0] << " " << diffuseLighting[1] << " " << diffuseLighting[2] << "\n";
+        }
+        //std::cout << currentFrame << "\n";
 
-        //std::cout << diffuse[0] << " " << diffuse[1] << " " << diffuse[2] << "\n";
 
         processInput(window);
 
@@ -281,15 +219,15 @@ int main()
 
         // light properties
         //ako oces svetlije modele, ovde gledaj!
-        mainRoomShader.setVec3("light.ambient", 0.5f, 0.5f, 0.5f);
+        mainRoomShader.setVec3("light.ambient", ambientLighting);
         // we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
         // each environment and lighting type requires some tweaking to get the best out of your environment.
-        mainRoomShader.setVec3("light.diffuse", diffuse);
-        mainRoomShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+        mainRoomShader.setVec3("light.diffuse", diffuseLighting);
+        mainRoomShader.setVec3("light.specular", specularLighting);
         mainRoomShader.setFloat("light.constant", 1.0f);
         mainRoomShader.setFloat("light.linear", 0.09f);
         mainRoomShader.setFloat("light.quadratic", 0.032f);
-        mainRoomShader.setFloat("shininess", 128.0f);
+        mainRoomShader.setFloat("shininess", shininess);
 
         // material properties
 
@@ -302,7 +240,7 @@ int main()
         mainRoom.Draw(mainRoomShader);
 
         // JAKO BITNA LINIJA -> ODREDJUJEMO GDE CEMO TACNO SLIKE SA OVIME, JER DODJES KAMEROM GDE IH OS, I GLEDAJ OVO
-        std::cout << ourCamera.Position[0] << " " << ourCamera.Position[1] << " " << ourCamera.Position[2] << "\n";
+        //std::cout << ourCamera.Position[0] << " " << ourCamera.Position[1] << " " << ourCamera.Position[2] << "\n";
 
         //FIRE HAZARD
 
@@ -336,13 +274,6 @@ int main()
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
-    // optional: de-allocate all resources once they've outlived their purpose:
-    // ------------------------------------------------------------------------
-
-    glDeleteVertexArrays(1, &cubeVAO);
-    glDeleteVertexArrays(1, &lightCubeVAO);
-    glDeleteBuffers(1, &VBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
