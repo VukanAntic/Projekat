@@ -19,5 +19,5 @@ RUPA U LAVIRINTU
 leva donja ivica rupe -7.47682 2.23947 -14.3424
 leva gornja ivica rupe -7.47682 2.23947 -27.2438
 
-desna donja ivica rupe 5.38767 2.23947 -14.3193
-desna gornja ivica rupe
+desna donja ivica rupe 5.38767 2.23947 -14.3424
+desna gornja ivica rupe 5.38767 2.23947 -27.2438
