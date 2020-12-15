@@ -127,7 +127,7 @@ int main()
         // ukoliko korisnik pokusa da izadje van uvodne sobe, vracamo ga na ivicu(LEVI ZID UVODNE SOBE)
         else if (ourCamera.Position.x < -8.34407 && ourCamera.Position.z < 7.42418 && ourCamera.Position.z > -7.70539)
             ourCamera.Position.x = -8.34407;
-        // (LEVI ZID UVODNE SOBE)
+        // (DESNI ZID UVODNE SOBE)
         else if (ourCamera.Position.x > 6.44959 && ourCamera.Position.z < 7.42418 && ourCamera.Position.z > -7.70539)
             ourCamera.Position.x = 6.44959;
         // (ZADNJI ZID UVODNE SOBE)
@@ -142,6 +142,27 @@ int main()
         // (PREDNJA STRANA LAVIRINTA)
         else if (ourCamera.Position.z < -33.4069)
             ourCamera.Position.z = -33.4069;
+         //(RUPA DESNA I LEVA STRANA) - moraju da se stave malo manje granice od onih za blizi i dalji zid jer ce inace lepiti za levi i desni zid
+        else if((ourCamera.Position.x < 5.48954 || ourCamera.Position.x > -7.69192) && ourCamera.Position.z > -27.0 && ourCamera.Position.z < -14.6){
+            if(ourCamera.Position.x > 5.48954 || ourCamera.Position.x < -7.69192) {}
+            else {
+                if (abs(6.44959 - ourCamera.Position.x) < abs(-8.34407 - ourCamera.Position.x))
+                    ourCamera.Position.x = 5.48954;
+                else
+                    ourCamera.Position.x = -7.69192;
+            }
+        }
+        //RUPA BLIZI I DALJI ZID 
+        else if((ourCamera.Position.z < -14.0583 || ourCamera.Position.z > -27.5423 ) && ourCamera.Position.x > -7.69192 && ourCamera.Position.x < 5.48954){
+            if(ourCamera.Position.z > -14.0583 || ourCamera.Position.z < -27.5423) {}
+            else {
+                if (abs( -7.70539 - ourCamera.Position.z) < abs(-33.8069 - ourCamera.Position.z))
+                    ourCamera.Position.z = -14.0583;
+                else
+                    ourCamera.Position.z = -27.5423;
+            }
+
+        }
         // (ZADNJI I PREDNJI DEO RUPE) -> PITAJ DIVNU KAKO RUPU DA OGRANICIMO(MOZEMO AKO JE U TOJ RUPI DA DODAMO RAZLIK UIZMEDJU PRETHODNOG Z I X)
         //else if (ourCamera.Position.x > -7.47682 && ourCamera.Position.x < 5.38767 && ourCamera.Position.z < -13.9424 && ourCamera.Position.z > -27.9438){
         //    float diffFar = std::fabs(ourCamera.Position.z - -27.9438);
