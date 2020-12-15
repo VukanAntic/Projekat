@@ -25,7 +25,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 1200;
+const unsigned int SCR_HEIGHT = 700;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -184,25 +184,54 @@ int main()
     Model flashlight(FileSystem::getPath("resources/objects/Flashlight/Flashlight_Idle.obj"));
     Model mainRoom(FileSystem::getPath("resources/objects/Lavirint/Lavirint4_1.obj"));
 
+    // dodajemo zbog efekta slabljenja baterijske lampe
+    glm::vec3 diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
     // render loop
     // -----------
-    float oldYaw = -90.0f;
-    float newYaw =  oldYaw;
-
-    float oldPitch = 0.0f;
-    float newPitch = oldPitch;
-
-    glm::vec3 diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
     while (!glfwWindowShouldClose(window))
     {
+        // ukoliko korisnih pokusa da izadje izvan sobe, vracamo ga na ivicu (PLAFON SOBE)
+        if (ourCamera.Position.y > 5.87922)
+            ourCamera.Position.y = 5.87922;
+        // (POD SOBE)
+        else if (ourCamera.Position.y < 0.4942135)
+            ourCamera.Position.y = 0.4942135;
+        // ukoliko korisnik pokusa da izadje van uvodne sobe, vracamo ga na ivicu(LEVI ZID UVODNE SOBE)
+        else if (ourCamera.Position.x < -8.34407 && ourCamera.Position.z < 7.42418 && ourCamera.Position.z > -7.70539)
+            ourCamera.Position.x = -8.34407;
+        // (LEVI ZID UVODNE SOBE)
+        else if (ourCamera.Position.x > 6.44959 && ourCamera.Position.z < 7.42418 && ourCamera.Position.z > -7.70539)
+            ourCamera.Position.x = 6.44959;
+        // (ZADNJI ZID UVODNE SOBE)
+        else if (ourCamera.Position.z > +7.42418)
+            ourCamera.Position.z = +7.42418;
+        // (LEVI ZID LAVIRINTA)
+        else if (ourCamera.Position.x < -13.584 && ourCamera.Position.z > -33.8069 && ourCamera.Position.z < -7.70539)
+            ourCamera.Position.x = -13.584;
+        // (DESNA IVICA LAVIRINTA)
+        else if (ourCamera.Position.x > 11.5185 && ourCamera.Position.z > -33.8069 && ourCamera.Position.z < -7.70539)
+            ourCamera.Position.x = 11.5185;
+        // (PREDNJA STRANA LAVIRINTA)
+        else if (ourCamera.Position.z < -33.4069)
+            ourCamera.Position.z = -33.4069;
+        // (ZADNJI I PREDNJI DEO RUPE) -> PITAJ DIVNU KAKO RUPU DA OGRANICIMO(MOZEMO AKO JE U TOJ RUPI DA DODAMO RAZLIK UIZMEDJU PRETHODNOG Z I X)
+        //else if (ourCamera.Position.x > -7.47682 && ourCamera.Position.x < 5.38767 && ourCamera.Position.z < -13.9424 && ourCamera.Position.z > -27.9438){
+        //    float diffFar = std::fabs(ourCamera.Position.z - -27.9438);
+        //    float diffNear = std::fabs(ourCamera.Position.z - -13.9424);
+        //    if (diffFar < diffNear)
+        //        ourCamera.Position.z =  -27.9438;
+        //    else
+        //        ourCamera.Position.z = -13.9424;
+        //}
+        //else if (ourCamera.Position.x > -7.47682 && ourCamera.Position.x < 5.38767 && ourCamera.Position.z < -13.9424 && ourCamera.Position.z > -27.9438){
+        //    float diffLeft = std::fabs(ourCamera.Position.x - -7.47682);
+        //    float diffRight = std::fabs(ourCamera.Position.x - 5.38767);
+        //    if (diffLeft < diffRight)
+        //        ourCamera.Position.x =  -7.47682;
+        //    else
+        //        ourCamera.Position.x = 5.38767;
+        //}
 
-        oldYaw = newYaw;
-        newYaw = ourCamera.Yaw;
-        float diffrenceYaw = newYaw - oldYaw;
-
-        oldPitch = newPitch;
-        newPitch = ourCamera.Pitch;
-        float diffrencePitch = newPitch - oldPitch;
 
         // racunanje vremena izmedju 2 frame-a
         float currentFrame = (float)glfwGetTime();
@@ -273,7 +302,7 @@ int main()
         mainRoom.Draw(mainRoomShader);
 
         // JAKO BITNA LINIJA -> ODREDJUJEMO GDE CEMO TACNO SLIKE SA OVIME, JER DODJES KAMEROM GDE IH OS, I GLEDAJ OVO
-        //std::cout << ourCamera.Position[0] << " " << ourCamera.Position[1] << " " << ourCamera.Position[2] << "\n";
+        std::cout << ourCamera.Position[0] << " " << ourCamera.Position[1] << " " << ourCamera.Position[2] << "\n";
 
         //FIRE HAZARD
 

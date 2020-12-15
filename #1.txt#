@@ -1,0 +1,23 @@
+podno ogranicenje po y 0.0942135
+plafon ogranicenje po y 5.87922
+
+UVODNA SOBA
+leva donja ivica uvodne sobe -8.74407 2.23947 7.82418
+leva gornja ivica uvodne sobe -8.74407 2.23947 -7.70539
+
+desna donja ivica uvodne sobe  6.84959 2.23947 7.82418
+desna gornja ivica uvodne sobe 6.84559 2.23947 -7.70539
+
+LAVIRINT
+leva donja granica lavirinta -13.984 2.23947 7.82418
+leva gornja granica lavirinta -13.984 2.23947 -33.8069
+
+desna donja granica lavirinta 11.9185 2.23947 7.82418
+desna gornja granica lavirinta 11.9185 2.23947 -33.8069
+
+RUPA U LAVIRINTU
+leva donja ivica rupe -7.47682 2.23947 -14.3424
+leva gornja ivica rupe -7.47682 2.23947 -27.2438
+
+desna donja ivica rupe 5.38767 2.23947 -14.3424
+desna gornja ivica rupe 5.38767 2.23947 -27.2438
