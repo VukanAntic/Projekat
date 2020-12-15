@@ -10,7 +10,7 @@ Ke 0.0 0.0 0.0
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\objects\\Skull\\Skull.jpg
+map_Kd Skull.jpg
 
 newmtl Boja_zida
 Ns 225.000000
@@ -31,7 +31,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 3
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\metal.jpg
+map_Kd metal.jpg
 
 newmtl Finish_Line.001
 Ns 225.000000
@@ -42,7 +42,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 3
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\metal.jpg
+map_Kd metal.jpg
 
 newmtl Grana
 Ns 18.000005
@@ -53,7 +53,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\spine.jpg
+map_Kd spine.jpg
 
 newmtl Granit
 Ns 18.000005
@@ -64,7 +64,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\granit.jpg
+map_Kd granit.jpg
 
 newmtl Material.001
 Ns 225.000000
@@ -75,7 +75,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd -s 0.100000 1.000000 0.500000 F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\tapete3.jpg
+map_Kd -s 0.100000 1.000000 0.500000 tapete3.jpg
 
 newmtl Material.002
 Ns 225.000000
@@ -86,7 +86,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd -s 1.000000 0.100000 0.100000 F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\tapete3.jpg
+map_Kd -s 1.000000 0.100000 0.100000 tapete3.jpg
 
 newmtl Material.004
 Ns 225.000000
@@ -97,7 +97,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd -s 1.000000 0.200000 1.000000 F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\tapete3.jpg
+map_Kd -s 1.000000 0.200000 1.000000 tapete3.jpg
 
 newmtl Material.005
 Ns 225.000000
@@ -108,7 +108,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd -o -0.100000 0.000000 0.000000 -s 1.700000 0.700000 1.000000 F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\tapete3.jpg
+map_Kd -o -0.100000 0.000000 0.000000 -s 1.700000 0.700000 1.000000 tapete3.jpg
 
 newmtl Material.006
 Ns 225.000000
@@ -119,7 +119,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd -o 0.000000 -0.100000 0.000000 -s 0.400000 1.100000 1.000000 F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\tapete3.jpg
+map_Kd -o 0.000000 -0.100000 0.000000 -s 0.400000 1.100000 1.000000 tapete3.jpg
 
 newmtl Pod
 Ns 225.000000
@@ -130,7 +130,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\WM_Marble-125_1024.png
+map_Kd WM_Marble-125_1024.png
 
 newmtl Sata
 Ns 18.000005
@@ -141,7 +141,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 1
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\sat2.jpg
+map_Kd sat2.jpg
 
 newmtl Sto
 Ns 225.000000
@@ -152,7 +152,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\table_DefaultMaterial_AlbedoTransparency.png
+map_Kd table_DefaultMaterial_AlbedoTransparency.png
 
 newmtl Trake
 Ns 225.000000
@@ -163,7 +163,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\trake.jpg
+map_Kd trake.jpg
 
 newmtl Vrata
 Ns 225.000000
@@ -174,7 +174,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 3
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\metal2.jpg
+map_Kd metal2.jpg
 
 newmtl Zid
 Ns 225.000000
@@ -195,8 +195,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Bump -bm 0.350042 F:\\SKOLA\\FAKS\\RG-projekat\\plant\\dirt_bump.jpg
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\land.jpg
+map_Kd land.jpg
 
 newmtl leaf
 Ns 225.000000
@@ -207,7 +206,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\sheet2.jpg
+map_Kd sheet2.jpg
 
 newmtl stalk1
 Ns 179.999996
@@ -218,5 +217,4 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
-map_Bump -bm 0.350042 F:\\SKOLA\\FAKS\\RG-projekat\\plant\\stalk1_bump.jpg
-map_Kd F:\\SKOLA\\FAKS\\RG-projekat\\Lavirint\\Textures\\trunk.jpg
+map_Kd trunk.jpg

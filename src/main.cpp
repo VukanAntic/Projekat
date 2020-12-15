@@ -25,13 +25,13 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 700;
+const unsigned int SCR_HEIGHT = 1200;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 // izmena pocetne lokacije kamere -> kasnije ce nam trebati da bi stavili u centar muzeja
-Camera ourCamera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera ourCamera(glm::vec3(-1.09837f, 2.23947f, 6.99487f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -82,57 +82,57 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     // kocke -> bice kasnije izbacene za sam muzej
-    float vertices[] = {
-            // positions          // normals           // texture coords
-            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
-            0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
-
-            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-            0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
-
-            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-            -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-            -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-
-            0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-            0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
-            0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
-
-            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
-
-            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
-    };
+    //float vertices[] = {
+    //        // positions          // normals           // texture coords
+    //        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+    //        0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
+    //        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+    //        0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+    //        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
+    //        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+//
+    //        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+    //        0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
+    //        0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+    //        0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+    //        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
+    //        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+//
+    //        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+    //        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+    //        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+    //        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+    //        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+    //        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+//
+    //        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+    //        0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+    //        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+    //        0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+    //        0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+    //        0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+//
+    //        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+    //        0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+    //        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+    //        0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+    //        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
+    //        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+//
+    //        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+    //        0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+    //        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+    //        0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+    //        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
+    //        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
+    //};
 
     unsigned int VBO, cubeVAO;
     glGenVertexArrays(1, &cubeVAO);
     glGenBuffers(1, &VBO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glBindVertexArray(cubeVAO);
 
@@ -162,6 +162,7 @@ int main()
     Shader cubeShader("resources/shaders/vertexCube.vs", "resources/shaders/fragmentCube.fs");
     Shader lightShader("resources/shaders/vertexLight.vs", "resources/shaders/fragmentLight.fs");
     Shader flashlightShader("resources/shaders/vertexFlashlight.vs", "resources/shaders/fragmentFlashlight.fs");
+    Shader mainRoomShader("resources/shaders/vertexMainroom.vs", "resources/shaders/fragmentMainroom.fs");
 
     // pravimo teksture
     std::string path1 = "resources/textures/container2.png";
@@ -173,14 +174,15 @@ int main()
     cubeShader.setFloat("material.difuse", 0);
     cubeShader.setFloat("material.specular", 1);
 
-    std::vector<std::vector<float>> translationsPerSquare = {
-            {-1.0f, 0.0f, -1.0f},
-            {0.5f, 0.0f, 1.0f},
-            {-0.0f, 0.0f, -2.0f},
-    };
+    //std::vector<std::vector<float>> translationsPerSquare = {
+    //        {-1.0f, 0.0f, -1.0f},
+    //        {0.5f, 0.0f, 1.0f},
+    //        {-0.0f, 0.0f, -2.0f},
+    //};
 
     // dodavanje flashlight-a "resources/objects/flashlight/Flashlight_Idle.obj.glb"
-    Model flashlight(FileSystem::getPath("resources/objects/Flashlight/flashlight.obj"));
+    Model flashlight(FileSystem::getPath("resources/objects/Flashlight/Flashlight_Idle.obj"));
+    Model mainRoom(FileSystem::getPath("resources/objects/Lavirint/Lavirint4_1.obj"));
 
     // render loop
     // -----------
@@ -190,6 +192,7 @@ int main()
     float oldPitch = 0.0f;
     float newPitch = oldPitch;
 
+    glm::vec3 diffuse = glm::vec3(1.0f, 1.0f, 1.0f);
     while (!glfwWindowShouldClose(window))
     {
 
@@ -205,6 +208,16 @@ int main()
         float currentFrame = (float)glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+        //std::cout << lastFrame << "\n";
+        int time = (int)lastFrame;
+
+        // SLABLJENJE BATERISJKE LAMPE
+        //if (time % 3 == 0){
+        //    diffuse = std::max(diffuse - glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.0f, 0.0f, 0.0f));
+        //    time = 0;
+        //}
+
+        //std::cout << diffuse[0] << " " << diffuse[1] << " " << diffuse[2] << "\n";
 
         processInput(window);
 
@@ -215,56 +228,52 @@ int main()
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // saljemo sve potrebne informacije za baterijsku lampu
-        cubeShader.use();
-        cubeShader.setVec3("light.position", ourCamera.Position);
-        cubeShader.setVec3("light.direction", ourCamera.Front);
-        cubeShader.setFloat("light.cutOff", glm::cos(glm::radians(17.5f)));
-        cubeShader.setFloat("light.outerCutOff", glm::cos(glm::radians(20.5f)));
-        cubeShader.setVec3("viewPos", ourCamera.Position);
-
-        // light properties
-        cubeShader.setVec3("light.ambient", 0.1f, 0.1f, 0.1f);
-        // we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
-        // each environment and lighting type requires some tweaking to get the best out of your environment.
-        cubeShader.setVec3("light.diffuse", 0.8f, 0.8f, 0.8f);
-        cubeShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-        cubeShader.setFloat("light.constant", 1.0f);
-        cubeShader.setFloat("light.linear", 0.09f);
-        cubeShader.setFloat("light.quadratic", 0.032f);
-
-        // material properties
-        cubeShader.setFloat("material.shininess", 32.0f);
-
         float zNear = 0.1f;
         float zFar = 100.0f;
         // racunanje projection matrice
         glm::mat4 projection = glm::perspective(glm::radians(ourCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, zNear, zFar);
-        cubeShader.setMat4("projection", projection);
-
         // racunanje view matrice
         glm::mat4 view = ourCamera.GetViewMatrix();
-        cubeShader.setMat4("view", view);
 
-        int i = 0;
 
-        glBindVertexArray(cubeVAO);
-        // crtanje pojedinacnih kocki (one koje se rotiraju -> sklono promeni)
-        for (std::vector<float> row : translationsPerSquare){
-            i++;
-            glm::mat4 model = glm::mat4(1.0f);
-            model = glm::translate(model, glm::vec3(row[0], row[1], row[2]));
-            model = glm::rotate(model, glm::radians((float)(i * 20 * glfwGetTime())), glm::vec3(1.0f, 0.0f, 0.0f));
-            model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-//
-            // Racunanje normalMatrix na CPU, ne GPU, ali ima problema -> Pitaj marka
-            //glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(model)));
-            //cubeShader.setUniform3fMatrix("normalMatrix", normalMatrix);
-//
-            cubeShader.setMat4("model", model);
-            glDrawArrays(GL_TRIANGLES, 0, 36);
-        }
+        // Racunanje normalMatrix na CPU, ne GPU, ali ima problema -> Pitaj marka
+        //glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(model)));
+        //cubeShader.setUniform3fMatrix("normalMatrix", normalMatrix);
 
+        // main room crtanje
+
+        // saljemo sve potrebne informacije za baterijsku lampu
+        mainRoomShader.use();
+        mainRoomShader.setVec3("light.position", ourCamera.Position);
+        mainRoomShader.setVec3("light.direction", ourCamera.Front);
+        mainRoomShader.setFloat("light.cutOff", glm::cos(glm::radians(20.5f)));
+        mainRoomShader.setFloat("light.outerCutOff", glm::cos(glm::radians(25.5f)));
+        mainRoomShader.setVec3("viewPos", ourCamera.Position);
+
+        // light properties
+        //ako oces svetlije modele, ovde gledaj!
+        mainRoomShader.setVec3("light.ambient", 0.5f, 0.5f, 0.5f);
+        // we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
+        // each environment and lighting type requires some tweaking to get the best out of your environment.
+        mainRoomShader.setVec3("light.diffuse", diffuse);
+        mainRoomShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+        mainRoomShader.setFloat("light.constant", 1.0f);
+        mainRoomShader.setFloat("light.linear", 0.09f);
+        mainRoomShader.setFloat("light.quadratic", 0.032f);
+        mainRoomShader.setFloat("shininess", 128.0f);
+
+        // material properties
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(1.3f, 1.3f, 1.3f));
+        mainRoomShader.setMat4("view", view);
+        mainRoomShader.setMat4("projection", projection);
+        mainRoomShader.setMat4("model", model);
+        mainRoom.Draw(mainRoomShader);
+
+        // JAKO BITNA LINIJA -> ODREDJUJEMO GDE CEMO TACNO SLIKE SA OVIME, JER DODJES KAMEROM GDE IH OS, I GLEDAJ OVO
+        //std::cout << ourCamera.Position[0] << " " << ourCamera.Position[1] << " " << ourCamera.Position[2] << "\n";
 
         //FIRE HAZARD
 
@@ -272,14 +281,13 @@ int main()
         flashlightShader.setMat4("view", view);
         flashlightShader.setMat4("projection", projection);
 
-        glm::vec3 lightPosition = glm::vec3(+3.8f, 0.0f, -1.0f);
-        glm::mat4 model = glm::mat4(1.0f);
+        glm::vec3 lightPosition = glm::vec3(+3.8f, 0.0f, -3.0f);
+        model = glm::mat4(1.0f);
         float flashlightDistance = zNear;
         // ourCamera.Position + flashlightDistance * ourCamera.Front
         glm::vec3 flashlightVector = ( ourCamera.Position + (flashlightDistance * ourCamera.Front));
         flashlightVector += glm::vec3(3.0f, 0.0f, 0.0f);
         // glm:`:vec3(-1.0f, 0.0f, -1.0f)
-        //qstd::cout << flashlightVector[0] << " " << flashlightVector[1] << " " << flashlightVector[2] << "\n";
         model = glm::translate(model, lightPosition);
         model = glm::rotate(model, glm::radians(+180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         //model = glm::rotate(model, glm::radians((float)(2 * M_PI / ourCamera.MouseSensitivity)), ourCamera.Front);
