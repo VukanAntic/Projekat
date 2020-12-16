@@ -21,6 +21,7 @@ Ke 0.0 0.0 0.0
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd zid.jpg
 
 newmtl Finish_Line
 Ns 225.000000
