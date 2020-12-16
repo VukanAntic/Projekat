@@ -23,6 +23,10 @@ void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
+// kod koji se cesto ponavlja, pa smo funkcije pisali
+void placePainting(Shader paintingShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model painting, glm::vec3 rotation = glm::vec3(1.0f, 0.0f, 0.0f), float angle = 360.0f);
+
+
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
 const unsigned int SCR_HEIGHT = 1200;
@@ -86,6 +90,8 @@ int main()
     Shader lightShader("resources/shaders/vertexLight.vs", "resources/shaders/fragmentLight.fs");
     Shader flashlightShader("resources/shaders/vertexFlashlight.vs", "resources/shaders/fragmentFlashlight.fs");
     Shader mainRoomShader("resources/shaders/vertexMainroom.vs", "resources/shaders/fragmentMainroom.fs");
+    Shader monkShader("resources/shaders/vertexMonk.vs", "resources/shaders/fragmentMonk.fs");
+    Shader paintingShader("resources/shaders/vertexPainting.vs", "resources/shaders/fragmentPainting.fs");
 
     // pravimo teksture
     std::string path1 = "resources/textures/container2.png";
@@ -98,9 +104,14 @@ int main()
     cubeShader.setFloat("material.specular", 1);
 
 
-    // dodavanje flashlight-a "resources/objects/flashlight/Flashlight_Idle.obj.glb"
-    Model flashlight(FileSystem::getPath("resources/objects/Flashlight/Flashlight_Idle.obj"));
-    Model mainRoom(FileSystem::getPath("resources/objects/Lavirint/Lavirint4_1.obj"));
+    // ucitavanje svih modela koji ce nam trebati
+    Model flashlight(FileSystem::getPath("resources/objects/Flashlight/flashlight.obj"));
+    Model mainRoom(FileSystem::getPath("resources/objects/Lavirint/Lavirint4_2.obj"));
+    Model monkSculture(FileSystem::getPath("resources/objects/monkStatue/monk.obj"));
+    Model paintingVanGogh(FileSystem::getPath("resources/objects/vanGogh/vanGogh.obj"));
+    Model paintingWave(FileSystem::getPath("resources/objects/wave/wave.obj"));
+    Model paintingTime(FileSystem::getPath("resources/objects/time/time.obj"));
+    Model paintingWinter(FileSystem::getPath("resources/objects/winter/winter.obj"));
 
     // dodajemo zbog efekta slabljenja baterijske lampe
     glm::vec3 ambientLighting = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -187,7 +198,7 @@ int main()
         int time = (int)lastFrame;
 
         // SLABLJENJE BATERISJKE LAMPE
-        if (time % 3 == 0 && batteryNotDead && time != lastValueTaken){
+        if (time % 300 == 0 && batteryNotDead && time != lastValueTaken){
             if (batteryLife % 20 == 0){
                 //ambientLighting -= ambientDiff;
                 //specularDiff -= specularDiff;
@@ -203,8 +214,9 @@ int main()
             //std::cout << batteryLife << "\n";
             //std::cout << diffuseLighting[0] << " " << diffuseLighting[1] << " " << diffuseLighting[2] << "\n";
         }
-        //std::cout << currentFrame << "\n";
 
+        // JAKO BITNA LINIJA -> ODREDJUJEMO GDE CEMO TACNO SLIKE SA OVIME, JER DODJES KAMEROM GDE IH OS, I GLEDAJ OVO
+        //std::cout << ourCamera.Position[0] << " " << ourCamera.Position[1] << " " << ourCamera.Position[2] << "\n";
 
         processInput(window);
 
@@ -212,7 +224,7 @@ int main()
         ourTexture1.activateTexture(0);
         ourTexture2.activateTexture(1);
 
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         float zNear = 0.1f;
@@ -227,17 +239,14 @@ int main()
         //glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(model)));
         //cubeShader.setUniform3fMatrix("normalMatrix", normalMatrix);
 
-        // main room crtanje
-
-        // saljemo sve potrebne informacije za baterijsku lampu
+        // GLAVNA SOBA
+        // light properties
         mainRoomShader.use();
         mainRoomShader.setVec3("light.position", ourCamera.Position);
         mainRoomShader.setVec3("light.direction", ourCamera.Front);
         mainRoomShader.setFloat("light.cutOff", glm::cos(glm::radians(20.5f)));
         mainRoomShader.setFloat("light.outerCutOff", glm::cos(glm::radians(25.5f)));
         mainRoomShader.setVec3("viewPos", ourCamera.Position);
-
-        // light properties
         //ako oces svetlije modele, ovde gledaj!
         mainRoomShader.setVec3("light.ambient", ambientLighting);
         // we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
@@ -249,8 +258,6 @@ int main()
         mainRoomShader.setFloat("light.quadratic", 0.032f);
         mainRoomShader.setFloat("shininess", shininess);
 
-        // material properties
-
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         model = glm::scale(model, glm::vec3(1.3f, 1.3f, 1.3f));
@@ -259,34 +266,86 @@ int main()
         mainRoomShader.setMat4("model", model);
         mainRoom.Draw(mainRoomShader);
 
-        // JAKO BITNA LINIJA -> ODREDJUJEMO GDE CEMO TACNO SLIKE SA OVIME, JER DODJES KAMEROM GDE IH OS, I GLEDAJ OVO
-        //std::cout << ourCamera.Position[0] << " " << ourCamera.Position[1] << " " << ourCamera.Position[2] << "\n";
+        // SVE SLIKE
+        // light properties
+        paintingShader.use();
+        paintingShader.setVec3("light.position", ourCamera.Position);
+        paintingShader.setVec3("light.direction", ourCamera.Front);
+        paintingShader.setFloat("light.cutOff", glm::cos(glm::radians(20.5f)));
+        paintingShader.setFloat("light.outerCutOff", glm::cos(glm::radians(25.5f)));
+        paintingShader.setVec3("viewPos", ourCamera.Position);
+        //ako oces svetlije modele, ovde gledaj!
+        paintingShader.setVec3("light.ambient", ambientLighting);
+        // we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
+        // each environment and lighting type requires some tweaking to get the best out of your environment.
+        paintingShader.setVec3("light.diffuse", diffuseLighting);
+        paintingShader.setVec3("light.specular", specularLighting);
+        paintingShader.setFloat("light.constant", 1.0f);
+        paintingShader.setFloat("light.linear", 0.09f);
+        paintingShader.setFloat("light.quadratic", 0.032f);
+        paintingShader.setFloat("shininess", shininess);
+
+        // crtanje svih slika
+        glm::vec3 rotation = glm::vec3(0.0f, 1.0f, 0.0f);
+        float angle = 180.0f;
+        placePainting(paintingShader, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.3f, 1.3f, 1.3f), view, projection, paintingVanGogh, rotation, angle);
+
+
+
+        // SKULPTURA KOJA PRATI
+        // light properties
+        monkShader.use();
+        mainRoomShader.setVec3("light.position", ourCamera.Position);
+        monkShader.setVec3("light.direction", ourCamera.Front);
+        monkShader.setFloat("light.cutOff", glm::cos(glm::radians(20.5f)));
+        monkShader.setFloat("light.outerCutOff", glm::cos(glm::radians(25.5f)));
+        monkShader.setVec3("viewPos", ourCamera.Position);
+        //ako oces svetlije modele, ovde gledaj!
+        monkShader.setVec3("light.ambient", ambientLighting);
+        // we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
+        // each environment and lighting type requires some tweaking to get the best out of your environment.
+        monkShader.setVec3("light.diffuse", diffuseLighting);
+        monkShader.setVec3("light.specular", specularLighting);
+        monkShader.setFloat("light.constant", 1.0f);
+        monkShader.setFloat("light.linear", 0.09f);
+        monkShader.setFloat("light.quadratic", 0.032f);
+        monkShader.setFloat("shininess", shininess);
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(10.6185f, 0.23947f, -8.21736f));
+        model = glm::scale(model, glm::vec3(0.4f, 0.5f, 0.3f));
+        model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        monkShader.setMat4("view", view);
+        monkShader.setMat4("projection", projection);
+        monkShader.setMat4("model", model);
+        monkSculture.Draw(monkShader);
+
 
         //FIRE HAZARD
 
-        view = glm::mat4(1.0f);
+        //view = glm::mat4(1.0f);
         flashlightShader.setMat4("view", view);
         flashlightShader.setMat4("projection", projection);
 
-        glm::vec3 lightPosition = glm::vec3(+3.8f, 0.0f, -3.0f);
+        //glm::vec3 lightPosition = glm::vec3(+3.8f, 0.0f, -3.0f);
         model = glm::mat4(1.0f);
-        float flashlightDistance = zNear;
+        float flashlightDistance = zNear + 0.3f;
         // ourCamera.Position + flashlightDistance * ourCamera.Front
         glm::vec3 flashlightVector = ( ourCamera.Position + (flashlightDistance * ourCamera.Front));
-        flashlightVector += glm::vec3(3.0f, 0.0f, 0.0f);
-        // glm:`:vec3(-1.0f, 0.0f, -1.0f)
-        model = glm::translate(model, lightPosition);
+        //flashlightVector += glm::vec3(3.0f, 0.0f, 0.0f);
+        glm::vec3 right = glm::cross(flashlightVector, ourCamera.Up);
+        glm::vec3 newVec = ourCamera.GetViewMatrix() * glm::vec4(right, 0.0);
+        model = glm::translate(model, newVec);
         model = glm::rotate(model, glm::radians(+180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
         //model = glm::rotate(model, glm::radians((float)(2 * M_PI / ourCamera.MouseSensitivity)), ourCamera.Front);
         // razlika ugla novogfront i starog front
 
         //model = glm::rotate(model, diffrencePitch, glm::vec3(1.0f, 0.0f, 0.0f));
         //model = glm::rotate(model, diffrenceYaw, glm::vec3(0.0f, 1.0f, 0.0f));
 
-        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+        //model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
         flashlightShader.setMat4("model", model);
-
-
         flashlight.Draw(flashlightShader);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -351,3 +410,16 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // sama promena
     glViewport(0, 0, width, height);
 }
+
+void placePainting(Shader paintingShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model painting, glm::vec3 rotation, float angle)
+{
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, translation);
+    model = glm::rotate(model, glm::radians(angle), rotation);
+    model = glm::scale(model, scale);
+    paintingShader.setMat4("view", view);
+    paintingShader.setMat4("projection", projection);
+    paintingShader.setMat4("model", model);
+    painting.Draw(paintingShader);
+}
+
