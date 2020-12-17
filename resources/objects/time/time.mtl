@@ -1,25 +1,24 @@
-# Blender MTL File: 'uploads_files_2547269_painting.blend'
+# Blender MTL File: 'time.blend'
 # Material Count: 2
 
-newmtl frame
-Ns 494.051664
-Ka 1.000000 1.000000 1.000000
+newmtl black.001
+Ns 325.567114
+Ka 0.813636 0.813636 0.813636
 Kd 0.000000 0.000000 0.000000
-Ks 0.700000 0.700000 0.700000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 2
+illum 3
 map_Kd dark-grey-black-slate-texture-with-high-resolution-background-natural-black-stone-wall_38607-444.jpg
 
-newmtl red_paint
-Ns 570.558347
+newmtl paint
+Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
-Ks 0.550000 0.550000 0.550000
+Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
 map_Kd Salvador-Dali-The-Persistence-of-Memory-1931-c.jpg
-map_d Salvador-Dali-The-Persistence-of-Memory-1931-c.jpg

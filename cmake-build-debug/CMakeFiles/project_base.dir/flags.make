@@ -6,5 +6,5 @@ CXX_FLAGS = -Wall -Wextra -g   -std=gnu++14
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/home/vukan/Desktop/Racunarska grafika/Projekat/cmake-build-debug/configuration" -I"/home/vukan/Desktop/Racunarska grafika/Projekat/include" -I"/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/include" 
+CXX_INCLUDES = -I/home/vukan/Desktop/Projekat/cmake-build-debug/configuration -I/home/vukan/Desktop/Projekat/include -I/home/vukan/Desktop/Projekat/libs/glad/include 
 

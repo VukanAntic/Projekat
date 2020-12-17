@@ -6,5 +6,5 @@ C_FLAGS = -g
 
 C_DEFINES = 
 
-C_INCLUDES = -I"/home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad/include" 
+C_INCLUDES = -I/home/vukan/Desktop/Projekat/libs/glad/include 
 

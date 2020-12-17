@@ -25,12 +25,12 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void setBorder();
 
 // kod koji se cesto ponavlja, pa smo funkcije pisali
-void placePainting(Shader paintingShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model painting, glm::vec3 rotation = glm::vec3(1.0f, 0.0f, 0.0f), float angle = 360.0f);
+void placePainting(Shader paintingShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model painting, float angleX = 360.0f, float angleY = 360.0f, float angleZ = 360.0f);
 void placeStatue(Shader statueShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model statue, glm::vec3 rotation = glm::vec3(1.0f, 0.0f, 0.0f), float angle = 360.0f);
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_HEIGHT = 700;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -164,7 +164,7 @@ int main()
         }
 
         // JAKO BITNA LINIJA -> ODREDJUJEMO GDE CEMO TACNO SLIKE SA OVIME, JER DODJES KAMEROM GDE IH OS, I GLEDAJ OVO
-        //std::cout << ourCamera.Position[0] << " " << ourCamera.Position[1] << " " << ourCamera.Position[2] << "\n";
+        std::cout << ourCamera.Position[0] << "f, " << ourCamera.Position[1] << "f, " << ourCamera.Position[2] << "f\n";
 
         processInput(window);
 
@@ -233,11 +233,33 @@ int main()
         paintingShader.setFloat("light.quadratic", 0.032f);
         paintingShader.setFloat("shininess", shininess);
 
-        // crtanje svih slika
-        glm::vec3 rotation = glm::vec3(0.0f, 1.0f, 0.0f);
-        float angle = 180.0f;
-        placePainting(paintingShader, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.3f, 1.3f, 1.3f), view, projection, paintingVanGogh, rotation, angle);
 
+        // crtanje svih slika
+
+        glm::vec3 rotation = glm::vec3(0.0f, 1.0f, 0.0f);
+        // VANGOGH SLIKA
+        float angleX = 180.0f;
+        float angleY = 90.0f; // 270
+        float angleZ = 360.0f;
+        placePainting(paintingShader, glm::vec3(-1.09837f, 5.0f, -14.3f), glm::vec3(1.0f, 7.0f, 5.0f), view, projection, paintingVanGogh, angleX, angleY, angleZ);
+
+        // WAVE SLIKA
+        angleX = 180.0f;
+        angleY = 270.0f; // 270
+        angleZ = 360.0f;
+        placePainting(paintingShader, glm::vec3(-1.09837f, 5.0f, -27.35f), glm::vec3(1.0f, 7.0f, 5.0f), view, projection, paintingWave, angleX, angleY, angleZ);
+
+        // TIME SLIKA
+        angleX = 180.0f;
+        angleY = 360.0f;
+        angleZ = 360.0f;
+        placePainting(paintingShader, glm::vec3(5.55f, 5.0f, -20.4944f), glm::vec3(1.0f, 7.0f, 5.0f), view, projection, paintingTime, angleX, angleY, angleZ);
+
+        // WINTER SLIKA
+        angleX = 180.0f;
+        angleY = 180.0f;
+        angleZ = 360.0f;
+        placePainting(paintingShader, glm::vec3(-7.55f, 5.0f, -20.4944f), glm::vec3(1.0f, 7.0f, 5.0f), view, projection, paintingWinter, angleX, angleY, angleZ);
 
 
         // SKULPTURA KOJA PRATI
@@ -288,6 +310,7 @@ int main()
         statueShader.setFloat("shininess", shininess);
 
         //crtanje statua
+        float angle;
         rotation = glm::vec3(0.0f, 1.0f, 0.0f);
         angle = 90.0f;
         placeStatue(statueShader, glm::vec3(-13.0f, 0.0f, -9.0f), glm::vec3(0.15f, 0.15f, 0.15f), view, projection, statuaAngel, rotation, angle);
@@ -392,11 +415,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-void placePainting(Shader paintingShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model painting, glm::vec3 rotation, float angle)
+void placePainting(Shader paintingShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model painting, float angleX, float angleY, float angleZ)
 {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, translation);
-    model = glm::rotate(model, glm::radians(angle), rotation);
+    model = glm::rotate(model, glm::radians(angleX), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(angleY), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(angleZ), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::scale(model, scale);
     paintingShader.setMat4("view", view);
     paintingShader.setMat4("projection", projection);

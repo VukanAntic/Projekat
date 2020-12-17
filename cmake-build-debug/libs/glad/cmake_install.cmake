@@ -1,4 +1,4 @@
-# Install script for directory: /home/vukan/Desktop/Racunarska grafika/Projekat/libs/glad
+# Install script for directory: /home/vukan/Desktop/Projekat/libs/glad
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
