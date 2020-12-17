@@ -30,7 +30,7 @@ void placeStatue(Shader statueShader,glm::vec3 translation, glm::vec3 scale,glm:
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 700;
+const unsigned int SCR_HEIGHT = 1200;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -111,11 +111,18 @@ int main()
     // ucitavanje svih modela koji ce nam trebati
     Model flashlight(FileSystem::getPath("resources/objects/Flashlight/flashlight.obj"));
     Model mainRoom(FileSystem::getPath("resources/objects/Lavirint/Lavirint4_2.obj"));
-    Model monkSculture(FileSystem::getPath("resources/objects/monkStatue/monk.obj"));
+
+    // slike
     Model paintingVanGogh(FileSystem::getPath("resources/objects/vanGogh/vanGogh.obj"));
     Model paintingWave(FileSystem::getPath("resources/objects/wave/wave.obj"));
     Model paintingTime(FileSystem::getPath("resources/objects/time/time.obj"));
     Model paintingWinter(FileSystem::getPath("resources/objects/winter/winter.obj"));
+    Model paintingBoats(FileSystem::getPath("resources/objects/boats/boats.obj"));
+    Model paintingStarry(FileSystem::getPath("resources/objects/starryNight/starry.obj"));
+    Model paintingForest(FileSystem::getPath("resources/objects/forest/forest.obj"));
+
+    // skulpture
+    Model monkSculture(FileSystem::getPath("resources/objects/monkStatue/monk.obj"));
     Model statuaAngel(FileSystem::getPath("resources/objects/statuaAndjeo/statuaAndjeo.obj"));
     Model statuaDisk(FileSystem::getPath("resources/objects/statuaBacacDiska/statuaBacac.obj"));
     Model statuaWoman(FileSystem::getPath("resources/objects/statuaZena/statuaZene.obj"));
@@ -241,25 +248,44 @@ int main()
         float angleX = 180.0f;
         float angleY = 90.0f; // 270
         float angleZ = 360.0f;
-        placePainting(paintingShader, glm::vec3(-1.09837f, 5.0f, -14.3f), glm::vec3(1.0f, 7.0f, 5.0f), view, projection, paintingVanGogh, angleX, angleY, angleZ);
+        placePainting(paintingShader, glm::vec3(-1.09837f, 5.0f, -14.3f), glm::vec3(2.5f, 7.0f, 5.0f), view, projection, paintingVanGogh, angleX, angleY, angleZ);
 
         // WAVE SLIKA
         angleX = 180.0f;
         angleY = 270.0f; // 270
         angleZ = 360.0f;
-        placePainting(paintingShader, glm::vec3(-1.09837f, 5.0f, -27.35f), glm::vec3(1.0f, 7.0f, 5.0f), view, projection, paintingWave, angleX, angleY, angleZ);
+        placePainting(paintingShader, glm::vec3(-1.09837f, 5.0f, -27.35f), glm::vec3(2.5f, 7.0f, 5.0f), view, projection, paintingWave, angleX, angleY, angleZ);
 
         // TIME SLIKA
         angleX = 180.0f;
         angleY = 360.0f;
         angleZ = 360.0f;
-        placePainting(paintingShader, glm::vec3(5.55f, 5.0f, -20.4944f), glm::vec3(1.0f, 7.0f, 5.0f), view, projection, paintingTime, angleX, angleY, angleZ);
+        placePainting(paintingShader, glm::vec3(5.55f, 5.0f, -20.4944f), glm::vec3(2.5f, 7.0f, 5.0f), view, projection, paintingTime, angleX, angleY, angleZ);
 
         // WINTER SLIKA
         angleX = 180.0f;
         angleY = 180.0f;
         angleZ = 360.0f;
-        placePainting(paintingShader, glm::vec3(-7.55f, 5.0f, -20.4944f), glm::vec3(1.0f, 7.0f, 5.0f), view, projection, paintingWinter, angleX, angleY, angleZ);
+        placePainting(paintingShader, glm::vec3(-7.55f, 5.0f, -20.4344f), glm::vec3(2.5f, 7.0f, 5.0f), view, projection, paintingWinter, angleX, angleY, angleZ);
+
+        // BOATS SLIKA
+        angleX = 180.0f;
+        angleY = 360.0f;
+        angleZ = 360.0f;
+        placePainting(paintingShader, glm::vec3(-13.884f, 5.0f, -17.4944f), glm::vec3(2.5f, 7.0f, 5.0f), view, projection, paintingBoats, angleX, angleY, angleZ);
+
+        // FOREST SLIKA
+        angleX = 180.0f;
+        angleY = 90.0f;
+        angleZ = 360.0f;
+        placePainting(paintingShader, glm::vec3(-1.09837f, 5.0f, -33.8069f), glm::vec3(2.5f, 7.0f, 5.0f), view, projection, paintingForest, angleX, angleY, angleZ);
+
+        // STARRY NIGHT SLIKA
+        angleX = 180.0f;
+        angleY = 180.0f;
+        angleZ = 360.0f;
+        placePainting(paintingShader, glm::vec3(11.7f, 5.0f, -20.4944f), glm::vec3(2.5f, 7.0f, 5.0f), view, projection, paintingStarry, angleX, angleY, angleZ);
+
 
 
         // SKULPTURA KOJA PRATI
