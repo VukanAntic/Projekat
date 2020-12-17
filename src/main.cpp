@@ -22,14 +22,15 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void setBorder();
 
 // kod koji se cesto ponavlja, pa smo funkcije pisali
 void placePainting(Shader paintingShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model painting, glm::vec3 rotation = glm::vec3(1.0f, 0.0f, 0.0f), float angle = 360.0f);
-
+void placeStatue(Shader statueShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model statue, glm::vec3 rotation = glm::vec3(1.0f, 0.0f, 0.0f), float angle = 360.0f);
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 1200;
+const unsigned int SCR_HEIGHT = 600;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -84,6 +85,7 @@ int main()
     //stbi_set_flip_vertically_on_load(true);
 
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
 
     // shaderi za kocku svetla kao i za kocke koje se rotiraju -> OVO SE MENJA PRI IZBACIVANJU KOCKI
     Shader cubeShader("resources/shaders/vertexCube.vs", "resources/shaders/fragmentCube.fs");
@@ -92,6 +94,8 @@ int main()
     Shader mainRoomShader("resources/shaders/vertexMainroom.vs", "resources/shaders/fragmentMainroom.fs");
     Shader monkShader("resources/shaders/vertexMonk.vs", "resources/shaders/fragmentMonk.fs");
     Shader paintingShader("resources/shaders/vertexPainting.vs", "resources/shaders/fragmentPainting.fs");
+    Shader statueShader("resources/shaders/vertexStatue.vs", "resources/shaders/fragmentStatue.fs");
+    Shader depthTestShader("resources/shaders/vertexDepthTesting.vs", "resources/shaders/fragmentDepthTesting.fs");
 
     // pravimo teksture
     std::string path1 = "resources/textures/container2.png";
@@ -112,6 +116,9 @@ int main()
     Model paintingWave(FileSystem::getPath("resources/objects/wave/wave.obj"));
     Model paintingTime(FileSystem::getPath("resources/objects/time/time.obj"));
     Model paintingWinter(FileSystem::getPath("resources/objects/winter/winter.obj"));
+    Model statuaAngel(FileSystem::getPath("resources/objects/statuaAndjeo/statuaAndjeo.obj"));
+    Model statuaDisk(FileSystem::getPath("resources/objects/statuaBacacDiska/statuaBacac.obj"));
+    Model statuaWoman(FileSystem::getPath("resources/objects/statuaZena/statuaZene.obj"));
 
     // dodajemo zbog efekta slabljenja baterijske lampe
     glm::vec3 ambientLighting = glm::vec3(0.5f, 0.5f, 0.5f);
@@ -129,67 +136,8 @@ int main()
     // -----------
     while (!glfwWindowShouldClose(window))
     {
-        // ukoliko korisnih pokusa da izadje izvan sobe, vracamo ga na ivicu (PLAFON SOBE)
-        if (ourCamera.Position.y > 5.87922)
-            ourCamera.Position.y = 5.87922;
-        // (POD SOBE)
-        else if (ourCamera.Position.y < 0.4942135)
-            ourCamera.Position.y = 0.4942135;
-        // ukoliko korisnik pokusa da izadje van uvodne sobe, vracamo ga na ivicu(LEVI ZID UVODNE SOBE)
-        else if (ourCamera.Position.x < -8.34407 && ourCamera.Position.z < 7.42418 && ourCamera.Position.z > -7.70539)
-            ourCamera.Position.x = -8.34407;
-        // (DESNI ZID UVODNE SOBE)
-        else if (ourCamera.Position.x > 6.44959 && ourCamera.Position.z < 7.42418 && ourCamera.Position.z > -7.70539)
-            ourCamera.Position.x = 6.44959;
-        // (ZADNJI ZID UVODNE SOBE)
-        else if (ourCamera.Position.z > +7.42418)
-            ourCamera.Position.z = +7.42418;
-        // (LEVI ZID LAVIRINTA)
-        else if (ourCamera.Position.x < -13.584 && ourCamera.Position.z > -33.8069 && ourCamera.Position.z < -7.70539)
-            ourCamera.Position.x = -13.584;
-        // (DESNA IVICA LAVIRINTA)
-        else if (ourCamera.Position.x > 11.5185 && ourCamera.Position.z > -33.8069 && ourCamera.Position.z < -7.70539)
-            ourCamera.Position.x = 11.5185;
-        // (PREDNJA STRANA LAVIRINTA)
-        else if (ourCamera.Position.z < -33.4069)
-            ourCamera.Position.z = -33.4069;
-         //(RUPA DESNA I LEVA STRANA) - moraju da se stave malo manje granice od onih za blizi i dalji zid jer ce inace lepiti za levi i desni zid
-        else if((ourCamera.Position.x < 5.9 || ourCamera.Position.x > -8.0) && ourCamera.Position.z > -26.6 && ourCamera.Position.z < -14.2){
-            if(ourCamera.Position.x > 5.9 || ourCamera.Position.x < -8.0) {}
-            else {
-                if (abs(6.44959 - ourCamera.Position.x) < abs(-8.34407 - ourCamera.Position.x))
-                    ourCamera.Position.x = 5.9;
-                else
-                    ourCamera.Position.x = -8.0;
-            }
-        }
-        else if((ourCamera.Position.z < -13.5 || ourCamera.Position.z > -27.3 ) && ourCamera.Position.x > -8.0 && ourCamera.Position.x < 5.9){
-            if(ourCamera.Position.z > -13.5 || ourCamera.Position.z < -27.3) {}
-            else {
-                if (abs( -7.70539 - ourCamera.Position.z) < abs(-33.8069 - ourCamera.Position.z))
-                    ourCamera.Position.z = -13.5;
-                else
-                    ourCamera.Position.z = -27.3;
-            }
-
-        }
-        // (ZADNJI I PREDNJI DEO RUPE) -> PITAJ DIVNU KAKO RUPU DA OGRANICIMO(MOZEMO AKO JE U TOJ RUPI DA DODAMO RAZLIK UIZMEDJU PRETHODNOG Z I X)
-        //else if (ourCamera.Position.x > -7.47682 && ourCamera.Position.x < 5.38767 && ourCamera.Position.z < -13.9424 && ourCamera.Position.z > -27.9438){
-        //    float diffFar = std::fabs(ourCamera.Position.z - -27.9438);
-        //    float diffNear = std::fabs(ourCamera.Position.z - -13.9424);
-        //    if (diffFar < diffNear)
-        //        ourCamera.Position.z =  -27.9438;
-        //    else
-        //        ourCamera.Position.z = -13.9424;
-        //}
-        //else if (ourCamera.Position.x > -7.47682 && ourCamera.Position.x < 5.38767 && ourCamera.Position.z < -13.9424 && ourCamera.Position.z > -27.9438){
-        //    float diffLeft = std::fabs(ourCamera.Position.x - -7.47682);
-        //    float diffRight = std::fabs(ourCamera.Position.x - 5.38767);
-        //    if (diffLeft < diffRight)
-        //        ourCamera.Position.x =  -7.47682;
-        //    else
-        //        ourCamera.Position.x = 5.38767;
-        //}
+       //postavljenje granica lavirinta
+        setBorder();
 
         // racunanje vremena izmedju 2 frame-a
         float currentFrame = (float)glfwGetTime();
@@ -312,13 +260,46 @@ int main()
         monkShader.setFloat("shininess", shininess);
 
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(10.6185f, 0.23947f, -8.21736f));
-        model = glm::scale(model, glm::vec3(0.4f, 0.5f, 0.3f));
+        model = glm::translate(model, glm::vec3(10.2185f, 0.23947f, -8.21736f));
+        model = glm::scale(model, glm::vec3(0.4f, 0.4f, 0.3f));
         model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         monkShader.setMat4("view", view);
         monkShader.setMat4("projection", projection);
         monkShader.setMat4("model", model);
         monkSculture.Draw(monkShader);
+
+        //OSTALE STATUE
+        //light properties
+        statueShader.use();
+        mainRoomShader.setVec3("light.position", ourCamera.Position);
+        statueShader.setVec3("light.direction", ourCamera.Front);
+        statueShader.setFloat("light.cutOff", glm::cos(glm::radians(20.5f)));
+        statueShader.setFloat("light.outerCutOff", glm::cos(glm::radians(25.5f)));
+        statueShader.setVec3("viewPos", ourCamera.Position);
+        //ako oces svetlije modele, ovde gledaj!
+        statueShader.setVec3("light.ambient", ambientLighting);
+        // we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
+        // each environment and lighting type requires some tweaking to get the best out of your environment.
+        statueShader.setVec3("light.diffuse", diffuseLighting);
+        statueShader.setVec3("light.specular", specularLighting);
+        statueShader.setFloat("light.constant", 1.0f);
+        statueShader.setFloat("light.linear", 0.09f);
+        statueShader.setFloat("light.quadratic", 0.032f);
+        statueShader.setFloat("shininess", shininess);
+
+        //crtanje statua
+        rotation = glm::vec3(0.0f, 1.0f, 0.0f);
+        angle = 90.0f;
+        placeStatue(statueShader, glm::vec3(-13.0f, 0.0f, -9.0f), glm::vec3(0.15f, 0.15f, 0.15f), view, projection, statuaAngel, rotation, angle);
+
+        rotation = glm::vec3(0.0f, 1.0f, 0.0f);
+        angle = 90.0f;
+        placeStatue(statueShader, glm::vec3(9.5f, 0.0f, -31.0f), glm::vec3(0.15f, 0.15f, 0.15f), view, projection, statuaDisk, rotation, angle);
+
+        rotation = glm::vec3(0.0f, 1.0f, 0.0f);
+        angle = 0.0f;
+        placeStatue(statueShader, glm::vec3(-21.0f, 0.75f, -32.0f), glm::vec3(0.2f, 0.2f, 0.2f), view, projection, statuaWoman, rotation, angle);
+      //  std::cout<<ourCamera.Position.x<<" "<<ourCamera.Position.y<<" "<<ourCamera.Position.z<<"\n";
 
 
         //FIRE HAZARD
@@ -423,3 +404,61 @@ void placePainting(Shader paintingShader,glm::vec3 translation, glm::vec3 scale,
     painting.Draw(paintingShader);
 }
 
+void placeStatue(Shader statueShader,glm::vec3 translation, glm::vec3 scale,glm::mat4 view, glm::mat4 projection, Model statue, glm::vec3 rotation, float angle)
+{
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, translation);
+    model = glm::rotate(model, glm::radians(angle), rotation);
+    model = glm::scale(model, scale);
+    statueShader.setMat4("view", view);
+    statueShader.setMat4("projection", projection);
+    statueShader.setMat4("model", model);
+    statue.Draw(statueShader);
+}
+
+void setBorder(){
+    // ukoliko korisnih pokusa da izadje izvan sobe, vracamo ga na ivicu (PLAFON SOBE)
+    if (ourCamera.Position.y > 5.87922)
+        ourCamera.Position.y = 5.87922;
+        // (POD SOBE)
+    else if (ourCamera.Position.y < 0.4942135)
+        ourCamera.Position.y = 0.4942135;
+        // ukoliko korisnik pokusa da izadje van uvodne sobe, vracamo ga na ivicu(LEVI ZID UVODNE SOBE)
+    else if (ourCamera.Position.x < -8.34407 && ourCamera.Position.z < 7.42418 && ourCamera.Position.z > -7.70539)
+        ourCamera.Position.x = -8.34407;
+        // (DESNI ZID UVODNE SOBE)
+    else if (ourCamera.Position.x > 6.44959 && ourCamera.Position.z < 7.42418 && ourCamera.Position.z > -7.70539)
+        ourCamera.Position.x = 6.44959;
+        // (ZADNJI ZID UVODNE SOBE)
+    else if (ourCamera.Position.z > +7.42418)
+        ourCamera.Position.z = +7.42418;
+        // (LEVI ZID LAVIRINTA)
+    else if (ourCamera.Position.x < -13.584 && ourCamera.Position.z > -33.8069 && ourCamera.Position.z < -7.70539)
+        ourCamera.Position.x = -13.584;
+        // (DESNA IVICA LAVIRINTA)
+    else if (ourCamera.Position.x > 11.5185 && ourCamera.Position.z > -33.8069 && ourCamera.Position.z < -7.70539)
+        ourCamera.Position.x = 11.5185;
+        // (PREDNJA STRANA LAVIRINTA)
+    else if (ourCamera.Position.z < -33.4069)
+        ourCamera.Position.z = -33.4069;
+        //(RUPA DESNA I LEVA STRANA) - moraju da se stave malo manje granice od onih za blizi i dalji zid jer ce inace lepiti za levi i desni zid
+    else if((ourCamera.Position.x < 5.9 || ourCamera.Position.x > -8.0) && ourCamera.Position.z > -26.6 && ourCamera.Position.z < -14.2){
+        if(ourCamera.Position.x > 5.9 || ourCamera.Position.x < -8.0) {}
+        else {
+            if (abs(6.44959 - ourCamera.Position.x) < abs(-8.34407 - ourCamera.Position.x))
+                ourCamera.Position.x = 5.9;
+            else
+                ourCamera.Position.x = -8.0;
+        }
+    }
+    else if((ourCamera.Position.z < -13.5 || ourCamera.Position.z > -27.3 ) && ourCamera.Position.x > -8.0 && ourCamera.Position.x < 5.9){
+        if(ourCamera.Position.z > -13.5 || ourCamera.Position.z < -27.3) {}
+        else {
+            if (abs( -7.70539 - ourCamera.Position.z) < abs(-33.8069 - ourCamera.Position.z))
+                ourCamera.Position.z = -13.5;
+            else
+                ourCamera.Position.z = -27.3;
+        }
+
+    }
+}
