@@ -30,7 +30,7 @@ void placeStatue(Shader statueShader,glm::vec3 translation, glm::vec3 scale,glm:
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 1200;
+const unsigned int SCR_HEIGHT = 600;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -87,6 +87,7 @@ int main()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
+
     // shaderi za kocku svetla kao i za kocke koje se rotiraju -> OVO SE MENJA PRI IZBACIVANJU KOCKI
     Shader cubeShader("resources/shaders/vertexCube.vs", "resources/shaders/fragmentCube.fs");
     Shader lightShader("resources/shaders/vertexLight.vs", "resources/shaders/fragmentLight.fs");
@@ -139,6 +140,10 @@ int main()
     float shininess = 32.0f;
     // da ne bi pokupili npr 2.1, 2.2, 2.3 kao 2, nego cim smo jednom 2 pokupili, nemoj vise uzimas time = 2
     float lastValueTaken = 0;
+
+
+    float zNear = 0.1f;
+    float zFar = 100.0f;
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -152,7 +157,10 @@ int main()
         lastFrame = currentFrame;
         int time = (int)lastFrame;
 
-        // SLABLJENJE BATERISJKE LAMPE
+        //-----------------------------------------------------------------------------------------------------------
+        // SLABLJENJE BATERIJSKE LAMPE
+        //-----------------------------------------------------------------------------------------------------------
+
         if (time % 300 == 0 && batteryNotDead && time != lastValueTaken){
             if (batteryLife % 20 == 0){
                 //ambientLighting -= ambientDiff;
@@ -171,7 +179,7 @@ int main()
         }
 
         // JAKO BITNA LINIJA -> ODREDJUJEMO GDE CEMO TACNO SLIKE SA OVIME, JER DODJES KAMEROM GDE IH OS, I GLEDAJ OVO
-        std::cout << ourCamera.Position[0] << "f, " << ourCamera.Position[1] << "f, " << ourCamera.Position[2] << "f\n";
+        //std::cout << ourCamera.Position[0] << "f, " << ourCamera.Position[1] << "f, " << ourCamera.Position[2] << "f\n";
 
         processInput(window);
 
@@ -182,8 +190,7 @@ int main()
         glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        float zNear = 0.1f;
-        float zFar = 100.0f;
+
         // racunanje projection matrice
         glm::mat4 projection = glm::perspective(glm::radians(ourCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, zNear, zFar);
         // racunanje view matrice
@@ -194,7 +201,31 @@ int main()
         //glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(model)));
         //cubeShader.setUniform3fMatrix("normalMatrix", normalMatrix);
 
+        //-----------------------------------------------------------------------------------------------------------
+        // LAMPA
+        //-----------------------------------------------------------------------------------------------------------
+
+        //view = glm::mat4(1.0f);
+        flashlightShader.setMat4("view", view);
+        flashlightShader.setMat4("projection", projection);
+
+        glm::mat4 model = glm::mat4(1.0f);
+        float flashlightDistance = zNear + 0.3f;
+        glm::vec3 flashlightVector = ( ourCamera.Position + (flashlightDistance * ourCamera.Front) + glm::vec3(+1.3f, -1.0f, 0.0f));
+        model = glm::translate(model, flashlightVector);
+        //std::cout << "Yaw : " << ourCamera.Yaw << "\nPitch : " << ourCamera.Pitch << "\n";
+        model = glm::rotate(model, -glm::radians(270.0f + ourCamera.Yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, -glm::radians(ourCamera.Pitch), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+        // crtanje lampe
+        flashlightShader.setMat4("model", model);
+        flashlight.Draw(flashlightShader);
+
+
+        //-----------------------------------------------------------------------------------------------------------
         // GLAVNA SOBA
+        //-----------------------------------------------------------------------------------------------------------
+
         // light properties
         mainRoomShader.use();
         mainRoomShader.setVec3("light.position", ourCamera.Position);
@@ -213,7 +244,7 @@ int main()
         mainRoomShader.setFloat("light.quadratic", 0.032f);
         mainRoomShader.setFloat("shininess", shininess);
 
-        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
         model = glm::scale(model, glm::vec3(1.3f, 1.3f, 1.3f));
         mainRoomShader.setMat4("view", view);
@@ -221,7 +252,10 @@ int main()
         mainRoomShader.setMat4("model", model);
         mainRoom.Draw(mainRoomShader);
 
+        //-----------------------------------------------------------------------------------------------------------
         // SVE SLIKE
+        //-----------------------------------------------------------------------------------------------------------
+
         // light properties
         paintingShader.use();
         paintingShader.setVec3("light.position", ourCamera.Position);
@@ -241,7 +275,9 @@ int main()
         paintingShader.setFloat("shininess", shininess);
 
 
-        // crtanje svih slika
+        //-----------------------------------------------------------------------------------------------------------
+        // CRTANJE SVIH SOBA
+        //-----------------------------------------------------------------------------------------------------------
 
         glm::vec3 rotation = glm::vec3(0.0f, 1.0f, 0.0f);
         // VANGOGH SLIKA
@@ -287,8 +323,10 @@ int main()
         placePainting(paintingShader, glm::vec3(11.7f, 5.0f, -20.4944f), glm::vec3(2.5f, 7.0f, 5.0f), view, projection, paintingStarry, angleX, angleY, angleZ);
 
 
-
+        //-----------------------------------------------------------------------------------------------------------
         // SKULPTURA KOJA PRATI
+        //-----------------------------------------------------------------------------------------------------------
+
         // light properties
         monkShader.use();
         mainRoomShader.setVec3("light.position", ourCamera.Position);
@@ -316,7 +354,10 @@ int main()
         monkShader.setMat4("model", model);
         monkSculture.Draw(monkShader);
 
-        //OSTALE STATUE
+        //-----------------------------------------------------------------------------------------------------------
+        // OSTALE STATUE
+        //-----------------------------------------------------------------------------------------------------------
+
         //light properties
         statueShader.use();
         mainRoomShader.setVec3("light.position", ourCamera.Position);
@@ -335,7 +376,10 @@ int main()
         statueShader.setFloat("light.quadratic", 0.032f);
         statueShader.setFloat("shininess", shininess);
 
-        //crtanje statua
+        //-----------------------------------------------------------------------------------------------------------
+        // CRTANJE STATUA
+        //-----------------------------------------------------------------------------------------------------------
+
         float angle;
         rotation = glm::vec3(0.0f, 1.0f, 0.0f);
         angle = 90.0f;
@@ -348,35 +392,6 @@ int main()
         rotation = glm::vec3(0.0f, 1.0f, 0.0f);
         angle = 0.0f;
         placeStatue(statueShader, glm::vec3(-21.0f, 0.75f, -32.0f), glm::vec3(0.2f, 0.2f, 0.2f), view, projection, statuaWoman, rotation, angle);
-      //  std::cout<<ourCamera.Position.x<<" "<<ourCamera.Position.y<<" "<<ourCamera.Position.z<<"\n";
-
-
-        //FIRE HAZARD
-
-        //view = glm::mat4(1.0f);
-        flashlightShader.setMat4("view", view);
-        flashlightShader.setMat4("projection", projection);
-
-        //glm::vec3 lightPosition = glm::vec3(+3.8f, 0.0f, -3.0f);
-        model = glm::mat4(1.0f);
-        float flashlightDistance = zNear + 0.3f;
-        // ourCamera.Position + flashlightDistance * ourCamera.Front
-        glm::vec3 flashlightVector = ( ourCamera.Position + (flashlightDistance * ourCamera.Front));
-        //flashlightVector += glm::vec3(3.0f, 0.0f, 0.0f);
-        glm::vec3 right = glm::cross(flashlightVector, ourCamera.Up);
-        glm::vec3 newVec = ourCamera.GetViewMatrix() * glm::vec4(right, 0.0);
-        model = glm::translate(model, newVec);
-        model = glm::rotate(model, glm::radians(+180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-        //model = glm::rotate(model, glm::radians((float)(2 * M_PI / ourCamera.MouseSensitivity)), ourCamera.Front);
-        // razlika ugla novogfront i starog front
-
-        //model = glm::rotate(model, diffrencePitch, glm::vec3(1.0f, 0.0f, 0.0f));
-        //model = glm::rotate(model, diffrenceYaw, glm::vec3(0.0f, 1.0f, 0.0f));
-
-        //model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-        flashlightShader.setMat4("model", model);
-        flashlight.Draw(flashlightShader);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
