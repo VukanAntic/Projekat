@@ -30,7 +30,7 @@ void placeStatue(Shader statueShader,glm::vec3 translation, glm::vec3 scale,glm:
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_HEIGHT = 1200;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -216,6 +216,10 @@ int main()
     // -----------
     while (!glfwWindowShouldClose(window))
     {
+        //uzimanje velicine framebuffera da scenu koju crtamo rasirimo na tu velicinu
+        int sizex, sizey;
+        glfwGetFramebufferSize(window, &sizex, &sizey);
+        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
         //postavljenje granica lavirinta
         setBorder();
 
@@ -470,6 +474,8 @@ int main()
         angle = 0.0f;
         placeStatue(statueShader, glm::vec3(-21.0f, 0.75f, -32.0f), glm::vec3(0.2f, 0.2f, 0.2f), view, projection, statuaWoman, rotation, angle);
 
+        //postavljanje scene na velicinu framebuffera
+        glViewport(0, 0, sizex, sizey);
         //iskljucujemo framebuffer
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glDisable(GL_DEPTH_TEST);
