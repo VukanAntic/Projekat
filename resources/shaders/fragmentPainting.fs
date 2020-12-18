@@ -31,10 +31,6 @@ uniform float shininess;
 float near = 0.1;
 float far = 100.0;
 
-float LinearizeDepth(float depth){
-    float z = depth * 2.8 - 1.0;
-    return (2.0 * near * far) / (far + near - z * (far - near));
-}
 
 void main()
 {
@@ -67,9 +63,7 @@ void main()
    diffuse   *= attenuation;
    specular *= attenuation;
 
-   //izmaglica
-   float depth = LinearizeDepth(gl_FragCoord.z) / far;
-   vec3 result = ambient + diffuse + specular - depth*25;
+   vec3 result = ambient + diffuse + specular;
    FragColor = vec4(result, 1.0);
 
 }
