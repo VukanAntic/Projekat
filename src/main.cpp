@@ -271,27 +271,7 @@ int main()
         // Racunanje normalMatrix na CPU, ne GPU, ali ima problema -> Pitaj marka
         //glm::mat3 normalMatrix = glm::mat3(glm::transpose(glm::inverse(model)));
         //cubeShader.setUniform3fMatrix("normalMatrix", normalMatrix);
-
-        //-----------------------------------------------------------------------------------------------------------
-        // LAMPA
-        //-----------------------------------------------------------------------------------------------------------
-
-        //view = glm::mat4(1.0f);
-        flashlightShader.setMat4("view", view);
-        flashlightShader.setMat4("projection", projection);
-
-        glm::mat4 model = glm::mat4(1.0f);
-        float flashlightDistance = zNear + 0.3f;
-        glm::vec3 flashlightVector = ( ourCamera.Position + (flashlightDistance * ourCamera.Front) + glm::vec3(+1.3f, -1.0f, 0.0f));
-        model = glm::translate(model, flashlightVector);
-        //std::cout << "Yaw : " << ourCamera.Yaw << "\nPitch : " << ourCamera.Pitch << "\n";
-        model = glm::rotate(model, -glm::radians(270.0f + ourCamera.Yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::rotate(model, -glm::radians(ourCamera.Pitch), glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-        // crtanje lampe
-        flashlightShader.setMat4("model", model);
-        flashlight.Draw(flashlightShader);
-
+        glm::mat4 model;
         //-----------------------------------------------------------------------------------------------------------
         // GLAVNA SOBA
         //-----------------------------------------------------------------------------------------------------------
@@ -321,6 +301,26 @@ int main()
         mainRoomShader.setMat4("projection", projection);
         mainRoomShader.setMat4("model", model);
         mainRoom.Draw(mainRoomShader);
+
+
+        //-----------------------------------------------------------------------------------------------------------
+        // LAMPA
+        //-----------------------------------------------------------------------------------------------------------
+        //view = glm::mat4(1.0f);
+        flashlightShader.setMat4("view", view);
+        flashlightShader.setMat4("projection", projection);
+
+        model = glm::mat4(1.0f);
+        float flashlightDistance = zNear + 0.3f;
+        glm::vec3 flashlightVector = ( ourCamera.Position + (flashlightDistance * ourCamera.Front) + glm::vec3(+1.3f, -1.0f, 0.0f));
+        model = glm::translate(model, flashlightVector);
+        //std::cout << "Yaw : " << ourCamera.Yaw << "\nPitch : " << ourCamera.Pitch << "\n";
+        model = glm::rotate(model, -glm::radians(270.0f + ourCamera.Yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, -glm::radians(ourCamera.Pitch), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+        // crtanje lampe
+        flashlightShader.setMat4("model", model);
+        flashlight.Draw(flashlightShader);
 
         //-----------------------------------------------------------------------------------------------------------
         // SVE SLIKE
@@ -468,13 +468,17 @@ int main()
         glDisable(GL_DEPTH_TEST);
 
         //ciscenje framebuffera koji ide na ekran
+       // glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
 
         //preusmeri nas buffer na ekran ono sto smo iscrtalli u medjuvremenu
         screenShader.use();
         glBindVertexArray(quadVAO);
         glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
         glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
