@@ -87,6 +87,16 @@ int main()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
+    //screen quad
+    float quadVertices[] = {
+            -1.0f,  1.0f, 0.0f, 1.0f,
+            -1.0f, -1.0f, 0.0f, 0.0f,
+             1.0f, -1.0f, 1.0f, 0.0f,
+
+            -1.0f,  1.0f, 0.0f, 1.0f,
+             1.0f, -1.0f, 1.0f, 0.0f,
+             1.0f,  1.0f, 1.0f, 1.0f,
+    };
 
     // shaderi za kocku svetla kao i za kocke koje se rotiraju -> OVO SE MENJA PRI IZBACIVANJU KOCKI
     Shader cubeShader("resources/shaders/vertexCube.vs", "resources/shaders/fragmentCube.fs");
@@ -97,6 +107,7 @@ int main()
     Shader paintingShader("resources/shaders/vertexPainting.vs", "resources/shaders/fragmentPainting.fs");
     Shader statueShader("resources/shaders/vertexStatue.vs", "resources/shaders/fragmentStatue.fs");
     Shader depthTestShader("resources/shaders/vertexDepthTesting.vs", "resources/shaders/fragmentDepthTesting.fs");
+    Shader screenShader("resources/shaders/vertexFramebuffer.vs", "resources/shaders/fragmentFramebuffer.fs");
 
     // pravimo teksture
     std::string path1 = "resources/textures/container2.png";
@@ -144,6 +155,59 @@ int main()
 
     float zNear = 0.1f;
     float zFar = 100.0f;
+
+    //setup screen quad
+    unsigned  int quadVAO, quadVBO;
+    glGenVertexArrays(1, &quadVAO);
+    glGenBuffers(1, &quadVBO);
+    glBindVertexArray(quadVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof (float)));
+
+    screenShader.use();
+    screenShader.setInt("screenTexture", 0);
+
+    // framebuffer binding
+    unsigned int fbo;
+    glGenFramebuffers(1, &fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+    //kreiranje teksture
+    unsigned int textureColorBuffer;
+    glGenTextures(1, &textureColorBuffer);
+    glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_INT, NULL);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // dodajemo teksturu framebufferu
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorBuffer, 0);
+    //izbegavamo da pravimo depth i stencil da budu textureColorBuffer objekti zbog performansi zato koristimo render buffer obj
+    //ne mozemo direktno da citamo iz njega, ako je neki bfer samo readonly ili writeonly onda ga opengl stavlja u posebni deo memorije na graficku
+    //koji je optimizovan za bas to
+    unsigned  int rbo;
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+
+    //postavljamo ga kao depth i stencil
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+
+
+    // provera framebuffer-a
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
+        //kul
+    }
+    //iskljucivanje framebuffer-a
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -187,14 +251,21 @@ int main()
         ourTexture1.activateTexture(0);
         ourTexture2.activateTexture(1);
 
-        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+
+        //aktiviranje framebuffera
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+        glEnable(GL_DEPTH_TEST);
+
+        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
         // racunanje projection matrice
         glm::mat4 projection = glm::perspective(glm::radians(ourCamera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, zNear, zFar);
         // racunanje view matrice
         glm::mat4 view = ourCamera.GetViewMatrix();
+
 
 
         // Racunanje normalMatrix na CPU, ne GPU, ali ima problema -> Pitaj marka
@@ -220,7 +291,6 @@ int main()
         // crtanje lampe
         flashlightShader.setMat4("model", model);
         flashlight.Draw(flashlightShader);
-
 
         //-----------------------------------------------------------------------------------------------------------
         // GLAVNA SOBA
@@ -393,11 +463,27 @@ int main()
         angle = 0.0f;
         placeStatue(statueShader, glm::vec3(-21.0f, 0.75f, -32.0f), glm::vec3(0.2f, 0.2f, 0.2f), view, projection, statuaWoman, rotation, angle);
 
+        //iskljucujemo framebuffer
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDisable(GL_DEPTH_TEST);
+
+        //ciscenje framebuffera koji ide na ekran
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        //preusmeri nas buffer na ekran ono sto smo iscrtalli u medjuvremenu
+        screenShader.use();
+        glBindVertexArray(quadVAO);
+        glBindTexture(GL_TEXTURE_2D, textureColorBuffer);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    glDeleteVertexArrays(1, &quadVAO);
+    glDeleteBuffers(1, &quadVBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
