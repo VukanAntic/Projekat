@@ -30,7 +30,7 @@ void placeStatue(Shader statueShader,glm::vec3 translation, glm::vec3 scale,glm:
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 1200;
+const unsigned int SCR_HEIGHT = 600;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -91,11 +91,11 @@ int main()
     float quadVertices[] = {
             -1.0f,  1.0f, 0.0f, 1.0f,
             -1.0f, -1.0f, 0.0f, 0.0f,
-             1.0f, -1.0f, 1.0f, 0.0f,
+            1.0f, -1.0f, 1.0f, 0.0f,
 
             -1.0f,  1.0f, 0.0f, 1.0f,
-             1.0f, -1.0f, 1.0f, 0.0f,
-             1.0f,  1.0f, 1.0f, 1.0f,
+            1.0f, -1.0f, 1.0f, 0.0f,
+            1.0f,  1.0f, 1.0f, 1.0f,
     };
 
     // shaderi za kocku svetla kao i za kocke koje se rotiraju -> OVO SE MENJA PRI IZBACIVANJU KOCKI
@@ -204,16 +204,19 @@ int main()
 
     // provera framebuffer-a
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
-        //kul
+        std::cout << "gg\n";
     }
     //iskljucivanje framebuffer-a
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    float cutoff = 20.5f;
+    float outerCutoff = 25.5f;
 
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
-       //postavljenje granica lavirinta
+        //postavljenje granica lavirinta
         setBorder();
 
         // racunanje vremena izmedju 2 frame-a
@@ -238,8 +241,11 @@ int main()
             lastValueTaken = time;
             if (batteryLife == 0) {
                 batteryNotDead = false;
+                diffuseLighting = glm::vec3(0.0f, 0.0f, 0.0f);
                 //kada se isprazni lampa promeni se atmosfera
                 screenShader.setInt("changeEffect", 1);
+                cutoff = 0;
+                outerCutoff = 0;
                 //shininess = 0;
             }
             //std::cout << batteryLife << "\n";
@@ -281,8 +287,8 @@ int main()
         mainRoomShader.use();
         mainRoomShader.setVec3("light.position", ourCamera.Position);
         mainRoomShader.setVec3("light.direction", ourCamera.Front);
-        mainRoomShader.setFloat("light.cutOff", glm::cos(glm::radians(20.5f)));
-        mainRoomShader.setFloat("light.outerCutOff", glm::cos(glm::radians(25.5f)));
+        mainRoomShader.setFloat("light.cutOff", glm::cos(glm::radians(cutoff)));
+        mainRoomShader.setFloat("light.outerCutOff", glm::cos(glm::radians(outerCutoff)));
         mainRoomShader.setVec3("viewPos", ourCamera.Position);
         //ako oces svetlije modele, ovde gledaj!
         mainRoomShader.setVec3("light.ambient", ambientLighting);
@@ -469,7 +475,7 @@ int main()
         glDisable(GL_DEPTH_TEST);
 
         //ciscenje framebuffera koji ide na ekran
-       // glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        // glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
 
