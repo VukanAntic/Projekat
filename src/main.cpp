@@ -30,7 +30,7 @@ void placeStatue(Shader statueShader,glm::vec3 translation, glm::vec3 scale,glm:
 
 // sto veci ekran
 const unsigned int SCR_WIDTH = 1800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_HEIGHT = 1200;
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -170,6 +170,7 @@ int main()
 
     screenShader.use();
     screenShader.setInt("screenTexture", 0);
+    screenShader.setInt("changeEffect", 0);
 
     // framebuffer binding
     unsigned int fbo;
@@ -225,7 +226,8 @@ int main()
         // SLABLJENJE BATERIJSKE LAMPE
         //-----------------------------------------------------------------------------------------------------------
 
-        if (time % 300 == 0 && batteryNotDead && time != lastValueTaken){
+        //%300 je mnogo vremena iovako se ceka minut ipo
+        if (time % 1 == 0 && batteryNotDead && time != lastValueTaken){
             if (batteryLife % 20 == 0){
                 //ambientLighting -= ambientDiff;
                 //specularDiff -= specularDiff;
@@ -236,6 +238,8 @@ int main()
             lastValueTaken = time;
             if (batteryLife == 0) {
                 batteryNotDead = false;
+                //kada se isprazni lampa promeni se atmosfera
+                screenShader.setInt("changeEffect", 1);
                 //shininess = 0;
             }
             //std::cout << batteryLife << "\n";
@@ -250,9 +254,6 @@ int main()
         // aktivacija textura
         ourTexture1.activateTexture(0);
         ourTexture2.activateTexture(1);
-
-
-
 
         //aktiviranje framebuffera
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
