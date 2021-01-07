@@ -37,6 +37,6 @@ Obrađene oblasti u projektu:
 
 -Modeli
 
--Model and Lighting: Model i osvetljenje (Mora biti u projektu. Ovde je demonstrirano kako se radi.)
+-Model and Lighting: Model i osvetljenje
 
 -Framebuffers: kreiranje, renderovanje na teksturu, post-procesiranje, kernel efekti
